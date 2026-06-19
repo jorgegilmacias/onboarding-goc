@@ -1,0 +1,92 @@
+name: Deploy PROD
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Optional existing ECR tag to promote (e.g. dev-<sha>)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-prod:
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+      ECS_CLUSTER: ${{ vars.ECS_CLUSTER_PROD }}
+      ECS_SERVICE: ${{ vars.ECS_SERVICE_PROD }}
+      ECS_TASK_FAMILY: ${{ vars.ECS_TASK_FAMILY_PROD }}
+      ECS_CONTAINER_NAME: ${{ vars.ECS_CONTAINER_NAME }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Resolve image URI
+        id: image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          INPUT_TAG: ${{ github.event.inputs.image_tag }}
+        run: |
+          if [ -n "$INPUT_TAG" ]; then
+            IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:$INPUT_TAG"
+          else
+            IMAGE_URI="$ECR_REGISTRY/$ECR_REPOSITORY:prod-${GITHUB_SHA}"
+            docker build -t "$IMAGE_URI" .
+            docker push "$IMAGE_URI"
+          fi
+          echo "image_uri=$IMAGE_URI" >> "$GITHUB_OUTPUT"
+
+      - name: Register new task definition revision
+        id: taskdef
+        env:
+          IMAGE_URI: ${{ steps.image.outputs.image_uri }}
+        run: |
+          aws ecs describe-task-definition --task-definition "$ECS_TASK_FAMILY" --query taskDefinition --output json > taskdef.json
+          python - <<'PY'
+          import json, os
+          with open("taskdef.json") as f:
+              td = json.load(f)
+          for key in [
+              "taskDefinitionArn", "revision", "status", "requiresAttributes",
+              "compatibilities", "registeredAt", "registeredBy"
+          ]:
+              td.pop(key, None)
+          image_uri = os.environ["IMAGE_URI"]
+          container_name = os.environ["ECS_CONTAINER_NAME"]
+          updated = False
+          for c in td.get("containerDefinitions", []):
+              if c.get("name") == container_name:
+                  c["image"] = image_uri
+                  updated = True
+          if not updated:
+              raise SystemExit(f"Container '{container_name}' not found in task definition.")
+          with open("taskdef-new.json", "w") as f:
+              json.dump(td, f)
+          PY
+          NEW_TD_ARN=$(aws ecs register-task-definition --cli-input-json file://taskdef-new.json --query 'taskDefinition.taskDefinitionArn' --output text)
+          echo "taskdef_arn=$NEW_TD_ARN" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy service
+        run: |
+          aws ecs update-service \
+            --cluster "$ECS_CLUSTER" \
+            --service "$ECS_SERVICE" \
+            --task-definition "${{ steps.taskdef.outputs.taskdef_arn }}" \
+            --force-new-deployment
