@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Onboarding Checklist - Arlo GOC{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Onboarding Checklist</h1>
+        <p>Track your progress through essential setup tasks and training milestones</p>
+    </div>
+
+    <div class="checklist-progress">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <p class="progress-text">
+            <span id="completed-count">0</span> of <span id="total-count">0</span> items completed
+        </p>
+        <p class="progress-milestone" id="progress-milestone"></p>
+    </div>
+
+    <div class="checklist-controls card">
+        <div class="filter-group" role="group" aria-label="Checklist filter">
+            <button class="btn btn-secondary btn-sm checklist-filter active" data-filter="all">All</button>
+            <button class="btn btn-secondary btn-sm checklist-filter" data-filter="pending">Pending</button>
+            <button class="btn btn-secondary btn-sm checklist-filter" data-filter="completed">Completed</button>
+        </div>
+        <button id="expand-all" class="btn btn-primary btn-sm">Collapse Details</button>
+    </div>
+
+    <section class="checklist-section">
+        <h2>Pre-Day 1: Before You Start</h2>
+        <div class="card">
+            <div class="checklist-group">
+                {% for item in checklist.pre_day1 %}
+                <div class="checklist-item">
+                    <input type="checkbox" 
+                           id="{{ item.id }}" 
+                           class="checklist-checkbox"
+                           {% if progress.get(item.id) %}checked{% endif %}>
+                    <label for="{{ item.id }}" class="checklist-label">
+                        <span class="checklist-title">{{ item.title }}</span>
+                        <span class="checklist-description">{{ item.description }}</span>
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="checklist-section">
+        <h2>Week 1: Foundation & Training</h2>
+        <div class="card">
+            <div class="checklist-group">
+                {% for item in checklist.week1 %}
+                <div class="checklist-item">
+                    <input type="checkbox" 
+                           id="{{ item.id }}" 
+                           class="checklist-checkbox"
+                           {% if progress.get(item.id) %}checked{% endif %}>
+                    <label for="{{ item.id }}" class="checklist-label">
+                        <span class="checklist-title">{{ item.title }}</span>
+                        <span class="checklist-description">{{ item.description }}</span>
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="checklist-section">
+        <h2>Week 2-5: Practical Experience</h2>
+        <div class="card">
+            <div class="checklist-group">
+                {% for item in checklist.week2 %}
+                <div class="checklist-item">
+                    <input type="checkbox" 
+                           id="{{ item.id }}" 
+                           class="checklist-checkbox"
+                           {% if progress.get(item.id) %}checked{% endif %}>
+                    <label for="{{ item.id }}" class="checklist-label">
+                        <span class="checklist-title">{{ item.title }}</span>
+                        <span class="checklist-description">{{ item.description }}</span>
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="action-section">
+        <div class="card card-success">
+            <h3>📤 Share Your Progress</h3>
+            <p>Send your checklist status to the GOC team on Slack</p>
+            <button id="send-to-slack" class="btn btn-primary btn-large">
+                📨 Send Status to Slack
+            </button>
+            <div id="slack-message" class="slack-message" style="display: none;"></div>
+        </div>
+    </section>
+
+    <section class="action-section">
+        <div class="card card-info">
+            <h3>Need Help?</h3>
+            <p>If you're having trouble completing any checklist items, reach out to:</p>
+            <ul>
+                <li><strong>IT Support:</strong> For tool access issues</li>
+                <li><strong>Your Manager:</strong> For training schedule questions</li>
+                <li><strong>Onboarding Buddy:</strong> For general guidance</li>
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.checklist-checkbox');
+    const checklistItems = document.querySelectorAll('.checklist-item');
+    const progressFill = document.getElementById('progress-fill');
+    const completedCount = document.getElementById('completed-count');
+    const totalCount = document.getElementById('total-count');
+    const progressMilestone = document.getElementById('progress-milestone');
+    const filterButtons = document.querySelectorAll('.checklist-filter');
+    const expandAllBtn = document.getElementById('expand-all');
+    let detailsExpanded = true;
+
+    function updateProgress() {
+        const total = checkboxes.length;
+        const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+        const percentage = (completed / total) * 100;
+
+        progressFill.style.width = percentage + '%';
+        completedCount.textContent = completed;
+        totalCount.textContent = total;
+
+        if (percentage === 100) {
+            progressMilestone.textContent = 'Outstanding! You completed 100% of your onboarding checklist.';
+        } else if (percentage >= 75) {
+            progressMilestone.textContent = 'Great momentum. You are in the final stretch.';
+        } else if (percentage >= 40) {
+            progressMilestone.textContent = 'Nice progress. Keep going with your week goals.';
+        } else {
+            progressMilestone.textContent = 'Start with Pre-Day 1 items to build quick momentum.';
+        }
+    }
+
+    function applyFilter(filter) {
+        checklistItems.forEach(item => {
+            const checkbox = item.querySelector('.checklist-checkbox');
+            const isCompleted = checkbox.checked;
+            const shouldShow =
+                filter === 'all' ||
+                (filter === 'pending' && !isCompleted) ||
+                (filter === 'completed' && isCompleted);
+
+            item.style.display = shouldShow ? 'flex' : 'none';
+        });
+    }
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            // Save state
+            fetch('/checklist/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `item_id=${this.id}&checked=${this.checked}`
+            });
+
+            updateProgress();
+            const activeFilter = document.querySelector('.checklist-filter.active')?.dataset.filter || 'all';
+            applyFilter(activeFilter);
+        });
+    });
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            applyFilter(this.dataset.filter);
+        });
+    });
+
+    expandAllBtn.addEventListener('click', function() {
+        detailsExpanded = !detailsExpanded;
+        document.querySelectorAll('.checklist-description').forEach(description => {
+            description.style.display = detailsExpanded ? 'block' : 'none';
+        });
+        expandAllBtn.textContent = detailsExpanded ? 'Collapse Details' : 'Expand All Details';
+    });
+
+    // Initial update
+    updateProgress();
+    applyFilter('all');
+
+    // Send to Slack functionality
+    const sendToSlackBtn = document.getElementById('send-to-slack');
+    const slackMessage = document.getElementById('slack-message');
+
+    sendToSlackBtn.addEventListener('click', function() {
+        // Disable button
+        sendToSlackBtn.disabled = true;
+        sendToSlackBtn.textContent = '📨 Sending...';
+        slackMessage.style.display = 'none';
+
+        // Collect checklist data
+        const checklistData = {
+            items: {}
+        };
+
+        checkboxes.forEach(checkbox => {
+            checklistData.items[checkbox.id] = checkbox.checked;
+        });
+
+        // Send to backend
+        fetch('/checklist/send-to-slack', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(checklistData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                slackMessage.className = 'slack-message slack-success';
+                slackMessage.textContent = '✅ ' + data.message;
+            } else {
+                slackMessage.className = 'slack-message slack-error';
+                slackMessage.textContent = '❌ ' + data.message;
+            }
+            slackMessage.style.display = 'block';
+
+            // Re-enable button
+            sendToSlackBtn.disabled = false;
+            sendToSlackBtn.textContent = '📨 Send Status to Slack';
+        })
+        .catch(error => {
+            slackMessage.className = 'slack-message slack-error';
+            slackMessage.textContent = '❌ Error: ' + error.message;
+            slackMessage.style.display = 'block';
+
+            // Re-enable button
+            sendToSlackBtn.disabled = false;
+            sendToSlackBtn.textContent = '📨 Send Status to Slack';
+        });
+    });
+});
+</script>
+{% endblock %}

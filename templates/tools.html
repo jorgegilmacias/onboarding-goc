@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Essential Tools - Arlo GOC{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Essential Tools Access</h1>
+        <p>Everything you need to access and configure your GOC tools</p>
+    </div>
+
+    <div class="info-box info-warning">
+        <h3>⚠️ Important: Complete All Tool Setup by End of Week 1</h3>
+        <p>You'll need access to all these tools to effectively perform your GOC duties. If you encounter any access issues, contact IT Support immediately.</p>
+    </div>
+
+    {% for tool_id, tool in tools.items() %}
+    <section class="tool-section">
+        <div class="card">
+            <div class="tool-header">
+                <h2>{{ tool.name }}</h2>
+                <a href="{{ tool.url }}" target="_blank" class="btn btn-primary">Access {{ tool.name }}</a>
+            </div>
+            
+            <p class="tool-description">{{ tool.description }}</p>
+
+            <div class="tool-info-grid">
+                <div class="tool-info-item">
+                    <h4>🔗 URL</h4>
+                    <p><a href="{{ tool.url }}" target="_blank">{{ tool.url }}</a></p>
+                </div>
+
+                <div class="tool-info-item">
+                    <h4>🔐 Access Request</h4>
+                    <p>{{ tool.access_request }}</p>
+                </div>
+            </div>
+
+            <div class="tool-details">
+                <div class="tool-column">
+                    <h3>Key Features</h3>
+                    <ul>
+                        {% for feature in tool.key_features %}
+                        <li>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="tool-column">
+                    <h3>Getting Started</h3>
+                    <ol>
+                        {% for step in tool.getting_started %}
+                        <li>{{ step }}</li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+
+    <section class="tips-section">
+        <div class="card card-success">
+            <h2>Tool Access Tips</h2>
+            <ul class="tips-list">
+                <li><strong>Use Ping Identity SSO:</strong> Most tools use single sign-on. Set up your MFA first.</li>
+                <li><strong>Bookmark Everything:</strong> Create a browser bookmark folder for all GOC tools.</li>
+                <li><strong>Test Your Access:</strong> Log into each tool and verify you can see the right dashboards.</li>
+                <li><strong>Mobile Apps:</strong> Install PagerDuty and Slack mobile apps for on-call coverage.</li>
+                <li><strong>Save Credentials Securely:</strong> Use a password manager for any additional credentials.</li>
+                <li><strong>Report Issues Immediately:</strong> Don't wait if you can't access a critical tool.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="integration-section">
+        <div class="card">
+            <h2>Tool Integration Overview</h2>
+            <p>Understanding how these tools work together will help you respond to incidents more effectively:</p>
+            
+            <div class="integration-flow">
+                <div class="flow-item">
+                    <strong>1. Detection</strong>
+                    <p>Monitoring systems detect an issue</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>2. Alert</strong>
+                    <p>PagerDuty sends alert to on-call engineer</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>3. Track</strong>
+                    <p>Create incident in ServiceNow/Jira</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>4. Communicate</strong>
+                    <p>Update team via Slack, customers via email</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">
+                    <strong>5. Resolve</strong>
+                    <p>Document resolution and close ticket</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

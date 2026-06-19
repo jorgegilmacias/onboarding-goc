@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Training Modules - Arlo GOC{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>GOC Training Program</h1>
+        <p>Your comprehensive 5-day training schedule</p>
+    </div>
+
+    <div class="info-box info-primary">
+        <h3>Training Schedule Overview</h3>
+        <p>Complete all five training modules in your first week. Each day builds on the previous one, so follow them in order. Allow 5-6 hours per day for training activities.</p>
+    </div>
+
+    <div class="training-grid">
+        {% for day_id, module in modules.items() %}
+        <a href="{{ url_for('training_day', day=day_id) }}" class="training-card">
+            <div class="training-day-badge">{{ day_id|upper|replace('DAY', 'Day ') }}</div>
+            <h3>{{ module.title }}</h3>
+            <div class="training-topics">
+                <strong>{{ module.topics|length }} Topics</strong>
+                <ul>
+                    {% for topic in module.topics[:3] %}
+                    <li>{{ topic.name }}</li>
+                    {% endfor %}
+                    {% if module.topics|length > 3 %}
+                    <li>+ {{ module.topics|length - 3 }} more...</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="training-meta">
+                <span>{{ module.objectives|length }} Learning Objectives</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <section class="training-approach">
+        <div class="card">
+            <h2>Training Approach</h2>
+            <div class="approach-grid">
+                <div class="approach-item">
+                    <div class="approach-icon">👥</div>
+                    <h3>Hands-On Learning</h3>
+                    <p>Interactive exercises and real-world scenarios to build practical skills</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-icon">🎯</div>
+                    <h3>Goal-Oriented</h3>
+                    <p>Clear learning objectives for each training day</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-icon">🔄</div>
+                    <h3>Iterative Practice</h3>
+                    <p>Repeated exposure to core concepts through different contexts</p>
+                </div>
+                <div class="approach-item">
+                    <div class="approach-icon">💬</div>
+                    <h3>Mentorship</h3>
+                    <p>Guidance from experienced GOC engineers throughout</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="assessment-section">
+        <div class="card card-info">
+            <h2>Assessment & Certification</h2>
+            <p>At the end of Day 5, you'll complete a practical assessment that covers:</p>
+            <ul>
+                <li>Incident response and triage procedures</li>
+                <li>Tool proficiency (Jira, ServiceNow, PagerDuty)</li>
+                <li>Communication and escalation protocols</li>
+                <li>Runbook execution</li>
+            </ul>
+            <p><strong>Passing Score:</strong> 80% or higher to proceed to shadowing phase</p>
+        </div>
+    </section>
+
+    <section class="tips-section">
+        <div class="card card-success">
+            <h2>Training Tips</h2>
+            <ul class="tips-list">
+                <li><strong>Complete Pre-Work:</strong> Review any assigned materials before each training day</li>
+                <li><strong>Participate Actively:</strong> Ask questions and engage in discussions</li>
+                <li><strong>Take Detailed Notes:</strong> Create a personal reference guide as you learn</li>
+                <li><strong>Practice After Hours:</strong> Reinforce learning by exploring tools independently</li>
+                <li><strong>Connect with Peers:</strong> Learn alongside other new hires when possible</li>
+                <li><strong>Request Clarification:</strong> Don't move forward if you don't understand something</li>
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Arlo GOC Onboarding{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Welcome to Arlo GOC</h1>
+        <p class="hero-subtitle">Your comprehensive onboarding guide for Global Operations Center</p>
+    </div>
+</div>
+
+<div class="container">
+    <section class="welcome-section">
+        <div class="card card-info">
+            <h2>AI Resource Assistant</h2>
+            <p>Ask for a topic and get the most relevant onboarding resources instantly.</p>
+            <div class="resource-assistant-controls">
+                <input
+                    type="text"
+                    id="home-resource-topic-input"
+                    placeholder="Example: war room process, pagerduty escalation, runbook"
+                    class="resource-topic-input"
+                />
+                <button id="home-resource-topic-search" class="btn btn-primary">Search Topic</button>
+            </div>
+            <p id="home-resource-assistant-status" class="resource-assistant-status"></p>
+            <div id="home-resource-assistant-results" class="resource-assistant-results"></div>
+        </div>
+    </section>
+
+    <section class="start-here-section">
+        <div class="card card-primary">
+            <h2>Start Here (First 30 Minutes)</h2>
+            <div class="start-steps">
+                <a href="{{ url_for('checklist') }}" class="start-step">
+                    <span class="step-badge">1</span>
+                    <div>
+                        <h3>Complete Pre-Day 1 Checklist</h3>
+                        <p>Finish access and setup tasks first to avoid blockers later.</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('tools') }}" class="start-step">
+                    <span class="step-badge">2</span>
+                    <div>
+                        <h3>Validate Essential Tools</h3>
+                        <p>Confirm Jira, ServiceNow, PagerDuty and Slack access.</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('training') }}" class="start-step">
+                    <span class="step-badge">3</span>
+                    <div>
+                        <h3>Kick Off Day 1 Training</h3>
+                        <p>Start with operations overview and deployment flow.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="welcome-section">
+        <div class="card">
+            <h2>Welcome to the Team!</h2>
+            <p>We're excited to have you join the Arlo Global Operations Center (GOC) team. This onboarding portal will guide you through your first weeks at Arlo and help you become a successful GOC Engineer.</p>
+            
+            <div class="info-box info-primary">
+                <h3>What is GOC?</h3>
+                <p>The Global Operations Center is responsible for 24/7 monitoring, incident response, and ensuring the reliability and availability of Arlo's products and services. As a GOC Engineer, you'll be at the frontline of maintaining our infrastructure and delivering exceptional service to millions of customers worldwide.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="quick-links-section">
+        <h2>Quick Start Guide</h2>
+        <div class="card-grid">
+            <a href="{{ url_for('checklist') }}" class="quick-link-card">
+                <div class="card-icon">✓</div>
+                <h3>Onboarding Checklist</h3>
+                <p>Track your progress through essential setup tasks and training milestones</p>
+            </a>
+
+            <a href="{{ url_for('tools') }}" class="quick-link-card">
+                <div class="card-icon">🔧</div>
+                <h3>Essential Tools</h3>
+                <p>Get access and learn about Jira, ServiceNow, PagerDuty, and more</p>
+            </a>
+
+            <a href="{{ url_for('training') }}" class="quick-link-card">
+                <div class="card-icon">📚</div>
+                <h3>Training Modules</h3>
+                <p>Complete your Day 1-5 training program with hands-on exercises</p>
+            </a>
+
+            <a href="{{ url_for('resources') }}" class="quick-link-card">
+                <div class="card-icon">📖</div>
+                <h3>Resources</h3>
+                <p>Access documentation, runbooks, and helpful reference materials</p>
+            </a>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <h2>Your First Two Weeks</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker">1</div>
+                <div class="timeline-content">
+                    <h3>Week 1: Foundation</h3>
+                    <ul>
+                        <li>Complete tool access setup</li>
+                        <li>Finish Day 1-5 training modules</li>
+                        <li>Learn monitoring systems and incident management</li>
+                        <li>Understand escalation procedures</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker">2</div>
+                <div class="timeline-content">
+                    <h3>Week 2: Practice & Shadow</h3>
+                    <ul>
+                        <li>Shadow senior GOC engineers</li>
+                        <li>Participate in real incident response</li>
+                        <li>Review runbook procedures</li>
+                        <li>Begin supervised on-call shifts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="card">
+            <h2>Meet Your Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <h4>GOC Manager</h4>
+                    <p>Sumanth Kumar</p>
+                </div>
+                <div class="team-member">
+                    <h4>Onboarding Buddy</h4>
+                    <p>Emilio Molina, Mahesh Apraj</p>
+                </div>
+                <div class="team-member">
+                    <h4>GOC Team Lead</h4>
+                    <p>Jorge Gil Macias</p>
+                </div>
+                <div class="team-member">
+                    <h4>Fellow GOC Engineers</h4>
+                    <p>Roster_Link: <a href="https://arlotech-my.sharepoint.com/:x:/g/personal/vmishra_arlo_com/IQCK48wtsqKXTIURU0br32YvAZtn6mLdzdlaw1JBhbySD-8?e=WbGSYb" target="_blank">Roster</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tips-section">
+        <div class="card card-success">
+            <h2>Tips for Success</h2>
+            <ul class="tips-list">
+                <li><strong>Ask Questions:</strong> No question is too small. The team is here to help you learn.</li>
+                <li><strong>Take Notes:</strong> Document processes and commands as you learn them.</li>
+                <li><strong>Practice:</strong> Use test environments to experiment with tools and procedures.</li>
+                <li><strong>Stay Organized:</strong> Keep track of credentials, contacts, and important links.</li>
+                <li><strong>Communicate:</strong> Keep your team informed during incidents and handovers.</li>
+                <li><strong>Be Patient:</strong> It takes time to learn all systems. Focus on steady progress.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('home-resource-topic-input');
+    const button = document.getElementById('home-resource-topic-search');
+    const status = document.getElementById('home-resource-assistant-status');
+    const results = document.getElementById('home-resource-assistant-results');
+
+    function renderResources(resourceList) {
+        if (!resourceList || resourceList.length === 0) {
+            results.innerHTML = '<p class="resource-note">No direct links found for this topic.</p>';
+            return;
+        }
+
+        results.innerHTML = resourceList.map(resource => `
+            <div class="resource-assistant-item">
+                <h3>${resource.title}</h3>
+                <p>${resource.description || ''}</p>
+                <a href="${resource.url}" target="_blank" class="btn btn-sm">Open Resource</a>
+            </div>
+        `).join('');
+    }
+
+    async function searchTopic() {
+        const topic = input.value.trim();
+        if (!topic) {
+            status.textContent = 'Please type a topic first.';
+            results.innerHTML = '';
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = 'Searching...';
+        status.textContent = 'Searching resources...';
+        results.innerHTML = '';
+
+        try {
+            const response = await fetch('/chatbot/resources', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ topic })
+            });
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                status.textContent = data.message || 'Unable to search resources right now.';
+                return;
+            }
+
+            status.textContent = `${data.answer} (source: ${data.source})`;
+            renderResources(data.resources || []);
+        } catch (error) {
+            status.textContent = `Search failed: ${error.message}`;
+        } finally {
+            button.disabled = false;
+            button.textContent = 'Search Topic';
+        }
+    }
+
+    button.addEventListener('click', searchTopic);
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            searchTopic();
+        }
+    });
+});
+</script>
+{% endblock %}

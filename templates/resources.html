@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+
+{% block title %}Resources - Arlo GOC{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>GOC Resources & Documentation</h1>
+        <p>Quick reference materials and helpful documentation</p>
+    </div>
+
+    <section class="resources-section">
+        <div class="card card-info">
+            <h2>AI Resource Assistant</h2>
+            <p>Ask for a topic and I will find the best matching resources for you.</p>
+            <div class="resource-assistant-controls">
+                <input
+                    type="text"
+                    id="resource-topic-input"
+                    placeholder="Example: war room process, pagerduty escalation, runbook"
+                    class="resource-topic-input"
+                />
+                <button id="resource-topic-search" class="btn btn-primary">Search Topic</button>
+            </div>
+            <p id="resource-assistant-status" class="resource-assistant-status"></p>
+            <div id="resource-assistant-results" class="resource-assistant-results"></div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="card card-primary">
+            <div class="collapsible-header" onclick="toggleCollapse('zoom-recordings')">
+                <h2>🎥 Training Video Recordings</h2>
+                <span class="collapse-icon" id="zoom-recordings-icon">▼</span>
+            </div>
+            <div id="zoom-recordings" class="collapsible-content">
+                <p>Recorded Zoom sessions from NOC Knowledge Transfer (KT) training program.</p>
+                
+                <div class="guide-list">
+                <div class="guide-item">
+                    <h3>Day 1: Team Introduction & Project Overview</h3>
+                    <p><strong>Topics Covered:</strong></p>
+                    <ul>
+                        <li>Team Introduction & Project Overview</li>
+                        <li>Routine Activities: Alerting, Red Metrics Monitoring, Deployment Activities, Terraform</li>
+                        <li>NOC SOPs (Standard Operating Procedures)</li>
+                    </ul>
+                    <p><strong>Access Details:</strong></p>
+                    <p>📹 <a href="https://arlo.zoom.us/rec/share/r9Uo79OCKGC0VbgFvIVrTzO-z2lsKoMiq8kaJwe6SAQDMJ_nRvI6JebLigCfCJ1w.WR5TpNnM_Rh1lSNm?startTime=1766504024000" target="_blank">View Recording</a></p>
+                    <p>🔐 <strong>Passcode:</strong> <code>ajdKkg7#</code></p>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Day 2: Datadog & Monitoring Tools</h3>
+                    <p><strong>Topics Covered:</strong></p>
+                    <ul>
+                        <li>Datadog Tool Overview and Detail Walkthrough</li>
+                        <li>Mandatory Dashboard</li>
+                        <li>PagerDuty Process to Initiate Escalation</li>
+                        <li>NOC Ticket Creation Process (Tags, Labels, Priority)</li>
+                        <li>Process of Alert Monitoring</li>
+                        <li>Alerts to be Ignored</li>
+                        <li>Excluded Endpoints in Monitoring Tools</li>
+                    </ul>
+                    <p><strong>Access Details:</strong></p>
+                    <p>📹 <a href="https://arlo.zoom.us/rec/share/9j-Ce0tTR_TSOT7X43ZJY4Hjw2xz_02vaI5pfc12Oqa8Yk2gAma9jVl_0of_HQBc.QJfgKiZ_goaO2iuj?startTime=1766590431000" target="_blank">View Recording</a></p>
+                    <p>🔐 <strong>Passcode:</strong> <code>3G1L$%s^</code></p>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Day 3: Alert & Dashboard Configuration</h3>
+                    <p><strong>Topics Covered:</strong></p>
+                    <ul>
+                        <li>Alert and Dashboard Configuration (Datadog, Grafana, Splunk, CloudWatch)</li>
+                        <li>Assets for Monitoring (BS/Camera details)</li>
+                        <li>Pingdom Monitoring URL List</li>
+                        <li>Critical Metrics (status.arlo.com)</li>
+                        <li>System Health Check Process and Validation Post-Deployment</li>
+                        <li>Version Page Overview</li>
+                        <li>Custom Scripts (xBroker, MQTT, Streaming)</li>
+                        <li>Verisure Batch Processing Dashboards</li>
+                    </ul>
+                    <p><strong>Access Details:</strong></p>
+                    <p>📹 <a href="https://arlo.zoom.us/rec/share/21W-b5lcgbtE7fmmPU31LvupPT3_HQ9xyZ9YJO4TdjBA1fU1BNmaBCUVrn5niyjJ.ElOrgyeNbWaNDC-Y?startTime=1766763368000" target="_blank">View Recording</a></p>
+                    <p>🔐 <strong>Passcode:</strong> <code>s^%x9qTO</code></p>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Day 4: Arlo Services & Architecture</h3>
+                    <p><strong>Topics Covered:</strong></p>
+                    <ul>
+                        <li>Overview of Arlo Services and Architecture</li>
+                        <li>Service Owners and Embedded Engineers</li>
+                        <li>Access and Credentials Management</li>
+                    </ul>
+                    <p><strong>Reference:</strong> <a href="https://arlo.atlassian.net/wiki/spaces/DOES/pages/55187717/NOC+KT" target="_blank">NOC KT Confluence Page</a></p>
+                </div>
+            </div>
+            
+                <p class="resource-note"><strong>Note:</strong> Replace the Zoom recording URLs with actual links from your email invitation. Contact your onboarding buddy if you don't have access to the recordings.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="card">
+            <div class="collapsible-header" onclick="toggleCollapse('documentation')">
+                <h2>📚 Documentation</h2>
+                <span class="collapse-icon" id="documentation-icon">▼</span>
+            </div>
+            <div id="documentation" class="collapsible-content">
+                <div class="resource-grid">
+                <div class="resource-item">
+                    <h3>NOC Bible (Knowledge Base)</h3>
+                    <p>Step-by-step procedures for common incidents</p>
+                    <a href="https://arlo.atlassian.net/wiki/spaces/DOES/pages/55151026/NOC+Bible" target="_blank" class="btn btn-sm">View Knowledge Articles</a>
+                </div>
+                <div class="resource-item">
+                    <h3>NOC KT Training Page</h3>
+                    <p>Complete knowledge transfer documentation</p>
+                    <a href="https://arlo.atlassian.net/wiki/spaces/DOES/pages/55187717/NOC+KT" target="_blank" class="btn btn-sm">View NOC KT</a>
+                </div>
+                <div class="resource-item">
+                    <h3>SRE & NOC Knowledge-base</h3>
+                    <p>System architecture and infrastructure maps</p>
+                    <a href="https://arlo.atlassian.net/wiki/spaces/AFS/pages/79102023/SRE+NOC+Knowledge-base" target="_blank" class="btn btn-sm">View Knowledge Base</a>
+                </div>
+                <div class="resource-item">
+                    <h3>War Room Process</h3>
+                    <p>Incident war room procedures and protocols</p>
+                    <a href="https://arlo.atlassian.net/wiki/pages/viewpage.action?pageId=55215297" target="_blank" class="btn btn-sm">View Process</a>
+                </div>
+                <div class="resource-item">
+                    <h3>Deployment Scorecard</h3>
+                    <p>Track and monitor deployment status</p>
+                    <a href="https://scorecard.arlocloud.com/" target="_blank" class="btn btn-sm">Access Scorecard</a>
+                </div>
+                <div class="resource-item">
+                    <h3>NOC Onboarding Checklist</h3>
+                    <p>Access and credentials checklist</p>
+                    <a href="https://arlo.atlassian.net/wiki/spaces/DOES/pages/55156845" target="_blank" class="btn btn-sm">View Checklist</a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="card">
+            <div class="collapsible-header" onclick="toggleCollapse('important-links')">
+                <h2>🔗 Important Links</h2>
+                <span class="collapse-icon" id="important-links-icon">▼</span>
+            </div>
+            <div id="important-links" class="collapsible-content">
+                <div class="links-grid">
+                <div class="link-category">
+                    <h3>Monitoring & Alerts</h3>
+                    <ul>
+                        <li><a href="#" target="_blank">Grafana Dashboards</a></li>
+                        <li><a href="https://arlo.datadoghq.com/dashboard/mpd-2aw-sfe/red---metrics?fromUser=false&refresh_mode=sliding&from_ts=1768861770320&to_ts=1769466570320&live=true" target="_blank">Red Metrics Monitoring</a></li>
+                        <li><a href="https://arlo.datadoghq.com/dashboard/cum-ivw-92c/red-metrics---adt?fromUser=true&refresh_mode=paused&from_ts=1769280121361&to_ts=1769452921361&live=false" target="_blank">Red Metrics ADT Monitoring</a></li>
+                        <li><a href="https://arlo.splunkcloud.com/en-US/app/arlo_sre/p0_streaming_dashboard?form.tok_time.earliest=1769020609&form.tok_time.latest=1769452632.824&form.tok_chart=line" target="_blank">P0 Streaming Dashboard</a></li>
+                        <li><a href="https://arlo.splunkcloud.com/en-US/app/arlo_sre/p0_cvr_dashboard?form.tok_time.earliest=1769020545&form.tok_time.latest=1769452568.841&form.tok_chart=line" target="_blank">P0 CVR Streaming Dashboard</a></li>
+                        <li><a href="https://arlo.splunkcloud.com/en-US/app/search/p0_streaming_dashboard_pp?form.tok_time.earliest=1769279686&form.tok_time.latest=1769452509.872&form.tok_chart=line" target="_blank">P0 Streaming Dashboard - Partner Platform (ADT)</a></li>
+                        <li><a href="https://arlo.splunkcloud.com/en-US/app/search/p0_streaming_dashboard_pp?form.tok_time.earliest=1769279686&form.tok_time.latest=1769452509.872&form.tok_chart=line" target="_blank">P0 Streaming Dashboard - Partner Platform (ADT)</a></li>
+                        
+                </div>
+                <div class="link-category">
+                    <h3>Communication</h3>
+                    <ul>
+                        <li><a href="https://arlo.slack.com" target="_blank">Slack Workspace</a></li>
+                        <li><a href="https://arlo.slack.com/archives/C06QSNH48CA" target="_blank">Oncall_escalation</a></li>
+                        <li><a href="https://arlo.slack.com/archives/C9HKDF7GR" target="_blank">Arlo_war_room</a></li>
+                        <li><a href="https://outlook.office.com" target="_blank">Outlook Email</a></li>
+                        <li><a href="https://arlo.slack.com/archives/C9HKDF7GR" target="_blank">GOC Teams Channel</a></li>
+                        <li><a href="https://arlo.zoom.us/j/94948149486?pwd=ahKgB47nqwoVfEdba1lLdGiakI6N3r.1" target="_blank">Zoom Meeting Room(deployments and escalations)</a></li>
+                    </ul>
+                </div>
+                <div class="link-category">
+                    <h3>Incident Management</h3>
+                    <ul>
+                        <li><a href="https://arlo.pagerduty.com" target="_blank">PagerDuty</a></li>
+                        <li><a href="https://arlo.service-now.com" target="_blank">ServiceNow</a></li>
+                        <li><a href="https://arlo.atlassian.net" target="_blank">Jira</a></li>
+                    </ul>
+                </div>
+                <div class="link-category">
+                    <h3>Internal Tools</h3>
+                    <ul>
+                        <li><a href="https://sso.arlo.com" target="_blank">Ping SSO Portal</a></li>
+                        <li><a href="http://localhost:5000" target="_blank">Arlo_GENAI</a></li>
+                        <li><a href="https://arlo.slack.com/archives/D0A5YMMUKPG" target="_blank">ARLOCHAT</a></li>
+                        <li><a href="https://selfservice.arlo.com" target="_blank">Password Management</a></li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="card">
+            <div class="collapsible-header" onclick="toggleCollapse('emergency-contacts')">
+                <h2>📞 Emergency Contacts</h2>
+                <span class="collapse-icon" id="emergency-contacts-icon">▼</span>
+            </div>
+            <div id="emergency-contacts" class="collapsible-content">
+                <div class="contacts-grid">
+                <div class="contact-card">
+                    <h3>GOC Manager</h3>
+                    <p>Primary escalation point</p>
+                    <p><strong>Slack:</strong> https://arlo.slack.com/archives/D0A397C4WKH</p>
+                </div>
+                <div class="contact-card">
+                    <h3>On-Call Lead Engineer</h3>
+                    <p>Technical escalation</p>
+                    <p><strong>Slack:</strong> https://arlo.slack.com/archives/C06QSNH48CA</p>
+                </div>
+                <div class="contact-card">
+                    <h3>IT Support</h3>
+                    <p>Tool access and technical issues</p>
+                    <p><strong>Email:</strong> noc@arlo.com</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Security Team</h3>
+                    <p>Security incidents</p>
+                    <p><strong>Email:</strong> noc@arlo.com</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="card card-info">
+            <div class="collapsible-header" onclick="toggleCollapse('quick-reference')">
+                <h2>🎯 Quick Reference Guides</h2>
+                <span class="collapse-icon" id="quick-reference-icon">▼</span>
+            </div>
+            <div id="quick-reference" class="collapsible-content">
+                <div class="guide-list">
+                <div class="guide-item">
+                    <h3>Incident Severity Levels</h3>
+                    <table class="severity-table">
+                        <tr>
+                            <th>Severity</th>
+                            <th>Description</th>
+                            <th>Response Time</th>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-sev1">P-1</span></td>
+                            <td>Critical service outage affecting all users</td>
+                            <td>Immediate (< 5 min)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-sev2">P-2</span></td>
+                            <td>Major functionality degraded or unavailable</td>
+                            <td>< 15 minutes</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge badge-sev3">P-3</span></td>
+                            <td>Minor service impact or degradation</td>
+                            <td>< 1 hour</td>
+                        </tr>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Common Slack Channels</h3>
+                    <ul>
+                        <li><a href="https://arlo.slack.com/archives/C06QSNH48CA" target="_blank">Oncall_escalation</a></li>
+                        <li><a href="https://arlo.slack.com/archives/C9HKDF7GR" target="_blank">Arlo_war_room</a></li>
+                        <li><a href="https://arlo.slack.com/archives/CB7NZJMQW" target="_blank">devops-noc</a></li>
+                        <li><a href="https://arlo.slack.com/archives/CGNF4QCPJ" target="_blank">Prod-dep-update</a></li>
+                        <li><a href="https://arlo.slack.com/archives/C9QQ57BHS" target="_blank">Devops-alert-pagerduty</a></li>
+                        <li><a href="https://arlo.slack.com/archives/GNVN9PFTM" target="_blank">SRE-Internal</a></li>
+                    </ul>
+                </div>
+                          
+                <div class="guide-item">
+                    <h3>Keyboard Shortcuts & Commands</h3>
+                    <ul>
+                        <li><strong>Jira:</strong> Press <code>c</code> to create issue, <code>/</code> for quick search</li>
+                        <li><strong>ServiceNow:</strong> <code>Ctrl+Alt+L</code> for quick link</li>
+                        <li><strong>Slack:</strong> <code>Cmd+K</code> quick switcher, <code>@here</code> for active users</li>
+                        <li><strong>PagerDuty:</strong> Press <code>A</code> to acknowledge, <code>R</code> to resolve</li>
+                    </ul>
+                </div>
+
+                <div class="guide-item">
+                    <h3>Splunk Search Syntax & Examples</h3>
+                    <p><strong>Typical Search Syntax:</strong></p>
+                    <pre><code>index=[index name] sourcetype=[source type name] [search keyword(s)]</code></pre>
+                    
+                    <p><strong>Common Search Examples:</strong></p>
+                    <table class="severity-table">
+                        <tr>
+                            <th>Search Type</th>
+                            <th>Splunk Query</th>
+                        </tr>
+                        <tr>
+                            <td>Production D2AP Device/FW Logs</td>
+                            <td><code>index=device_prod sourcetype="kube:container:backend-log-server" SS=FW</code></td>
+                        </tr>
+                        <tr>
+                            <td>Production Basestation Connected Device/FW Logs</td>
+                            <td><code>index=xc_services_prod sourcetype="kube:container:metric-collector"</code></td>
+                        </tr>
+                        <tr>
+                            <td>Production Client/App iOS Logs</td>
+                            <td><code>index=device_prod sourcetype="kube:container:backend-log-server" SS=IOS</code></td>
+                        </tr>
+                        <tr>
+                            <td>Production Client/App Android Logs</td>
+                            <td><code>index=device_prod sourcetype="kube:container:backend-log-server" SS=ANDROID</code></td>
+                        </tr>
+                        <tr>
+                            <td>Production Web App (Front End) Logs</td>
+                            <td><code>index=device_prod sourcetype="kube:container:backend-log-server" SS=FE</code></td>
+                        </tr>
+                        <tr>
+                            <td>Product Savant / Object Detection Logs</td>
+                            <td><code>index=savant_prod sourcetype="var:log:syslog"</code></td>
+                        </tr>
+                        <tr>
+                            <td>QA Logs (by Camera ID or Device ID)</td>
+                            <td><code>index=*qa cameraid="4CD161SJ06321" OR deviceid="48B2557L48BE6"</code></td>
+                        </tr>
+                    </table>
+                    <p class="resource-note"><strong>Pro Tip:</strong> Replace camera ID and device ID with actual values when searching QA logs.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="card card-success">
+            <div class="collapsible-header" onclick="toggleCollapse('pro-tips')">
+                <h2>💡 Pro Tips</h2>
+                <span class="collapse-icon" id="pro-tips-icon">▼</span>
+            </div>
+            <div id="pro-tips" class="collapsible-content">
+                <ul class="tips-list">
+                <li>Bookmark your most-used runbooks for quick access during incidents</li>
+                <li>Create custom Jira filters for your common queries</li>
+                <li>Set up saved searches in ServiceNow for recurring tasks</li>
+                <li>Use Slack reminders to follow up on pending items</li>
+                <li>Keep a personal wiki page with your notes and learnings</li>
+                <li>Subscribe to relevant Confluence spaces for automatic updates</li>
+                <li><strong>Save frequently used Splunk searches</strong> - Click "Save As" in Splunk to create alerts or scheduled reports</li>
+                <li><strong>Use Splunk time range shortcuts</strong> - earliest=-24h, earliest=-7d, or earliest=@d (today) for faster searches</li>
+            </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function toggleCollapse(sectionId) {
+    const content = document.getElementById(sectionId);
+    const icon = document.getElementById(sectionId + '-icon');
+    
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+        icon.textContent = '▼';
+    } else {
+        content.style.display = 'none';
+        icon.textContent = '▶';
+    }
+}
+
+// Initialize - keep all sections expanded by default
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('resource-topic-input');
+    const button = document.getElementById('resource-topic-search');
+    const status = document.getElementById('resource-assistant-status');
+    const results = document.getElementById('resource-assistant-results');
+
+    function renderResources(resourceList) {
+        if (!resourceList || resourceList.length === 0) {
+            results.innerHTML = '<p class="resource-note">No direct links found for this topic.</p>';
+            return;
+        }
+
+        results.innerHTML = resourceList.map(resource => `
+            <div class="resource-assistant-item">
+                <h3>${resource.title}</h3>
+                <p>${resource.description || ''}</p>
+                <a href="${resource.url}" target="_blank" class="btn btn-sm">Open Resource</a>
+            </div>
+        `).join('');
+    }
+
+    async function searchTopic() {
+        const topic = input.value.trim();
+        if (!topic) {
+            status.textContent = 'Please type a topic first.';
+            results.innerHTML = '';
+            return;
+        }
+
+        button.disabled = true;
+        button.textContent = 'Searching...';
+        status.textContent = 'Searching resources...';
+        results.innerHTML = '';
+
+        try {
+            const response = await fetch('/chatbot/resources', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ topic })
+            });
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                status.textContent = data.message || 'Unable to search resources right now.';
+                return;
+            }
+
+            status.textContent = `${data.answer} (source: ${data.source})`;
+            renderResources(data.resources || []);
+        } catch (error) {
+            status.textContent = `Search failed: ${error.message}`;
+        } finally {
+            button.disabled = false;
+            button.textContent = 'Search Topic';
+        }
+    }
+
+    button.addEventListener('click', searchTopic);
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            searchTopic();
+        }
+    });
+});
+</script>
+{% endblock %}

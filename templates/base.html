@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Arlo GOC Onboarding{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="{{ url_for('static', filename='images/arlo-logo.svg') }}" alt="Arlo" class="logo">
+                <h1>GOC Onboarding</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+                <li><a href="{{ url_for('checklist') }}" class="nav-link">Checklist</a></li>
+                <li><a href="{{ url_for('tools') }}" class="nav-link">Essential Tools</a></li>
+                <li><a href="{{ url_for('training') }}" class="nav-link">Training</a></li>
+                <li><a href="{{ url_for('resources') }}" class="nav-link">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Arlo Technologies. All rights reserved.</p>
+            <p>GOC Team | Need help? Contact <a href="mailto:noc@arlo.com">noc@arlo.com</a></p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

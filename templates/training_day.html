@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}{{ module.title }} - Arlo GOC Training{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="breadcrumb">
+        <a href="{{ url_for('training') }}">Training</a> / {{ day|upper|replace('DAY', 'Day ') }}
+    </div>
+
+    <div class="page-header">
+        <h1>{{ module.title }}</h1>
+    </div>
+
+    <section class="objectives-section">
+        <div class="card card-primary">
+            <h2>Learning Objectives</h2>
+            <p>By the end of this training day, you will be able to:</p>
+            <ul class="objectives-list">
+                {% for objective in module.objectives %}
+                <li>{{ objective }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <section class="topics-section">
+        <div class="card">
+            <h2>Training Topics</h2>
+            <div class="topics-list">
+                {% for topic in module.topics %}
+                <div class="topic-item">
+                    <div class="topic-header">
+                        <h3>{{ loop.index }}. {{ topic.name }}</h3>
+                        <div class="topic-meta">
+                            <span class="topic-duration">{{ topic.duration }}</span>
+                            <span class="topic-type type-{{ topic.type }}">{{ topic.type|capitalize }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="resources-section">
+        <div class="card card-info">
+            <h2>Training Resources</h2>
+            <p>You'll need access to the following resources for today's training:</p>
+            <ul class="resources-list">
+                {% for resource in module.resources %}
+                <li>{{ resource }}</li>
+                {% endfor %}
+            </ul>
+            <p class="resource-note">Your trainer will provide links and access to these materials during the session.</p>
+        </div>
+    </section>
+
+    {% if day in ['day1', 'day2', 'day3'] %}
+    <section class="zoom-recording-section">
+        <div class="card card-primary">
+            <h2>🎥 Zoom Recording</h2>
+            {% if day == 'day1' %}
+            <p><strong>Topics Covered:</strong> Team Introduction, Project Overview, Routine Activities, NOC SOPs</p>
+            <p>📹 <a href="https://arlo.zoom.us/rec/share/r9Uo79OCKGC0VbgFvIVrTzO-z2lsKoMiq8kaJwe6SAQDMJ_nRvI6JebLigCfCJ1w.WR5TpNnM_Rh1lSNm?startTime=1766504024000" target="_blank" class="btn btn-primary">View Day 1 Recording</a></p>
+            <p>🔐 <strong>Passcode:</strong> <code>ajdKkg7#</code></p>
+            {% elif day == 'day2' %}
+            <p><strong>Topics Covered:</strong> Datadog Overview, PagerDuty, Alert Monitoring, Ticket Creation</p>
+            <p>📹 <a href="https://arlo.zoom.us/rec/share/9j-Ce0tTR_TSOT7X43ZJY4Hjw2xz_02vaI5pfc12Oqa8Yk2gAma9jVl_0of_HQBc.QJfgKiZ_goaO2iuj?startTime=1766590431000" target="_blank" class="btn btn-primary">View Day 2 Recording</a></p>
+            <p>🔐 <strong>Passcode:</strong> <code>3G1L$%s^</code></p>
+            {% elif day == 'day3' %}
+            <p><strong>Topics Covered:</strong> Dashboard Configuration, Health Checks, Custom Scripts, Monitoring Assets</p>
+            <p>📹 <a href="https://arlo.zoom.us/rec/share/21W-b5lcgbtE7fmmPU31LvupPT3_HQ9xyZ9YJO4TdjBA1fU1BNmaBCUVrn5niyjJ.ElOrgyeNbWaNDC-Y?startTime=1766763368000" target="_blank" class="btn btn-primary">View Day 3 Recording</a></p>
+            <p>🔐 <strong>Passcode:</strong> <code>s^%x9qTO</code></p>
+            {% endif %}
+            <p class="resource-note"><strong>Note:</strong> Copy the passcode before clicking the recording link. You'll need it to access the video.</p>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="navigation-section">
+        <div class="training-navigation">
+            {% if day == 'day1' %}
+            <a href="{{ url_for('training') }}" class="btn btn-secondary">← Back to Training</a>
+            <a href="{{ url_for('training_day', day='day2') }}" class="btn btn-primary">Next: Day 2 →</a>
+            {% elif day == 'day2' %}
+            <a href="{{ url_for('training_day', day='day1') }}" class="btn btn-secondary">← Day 1</a>
+            <a href="{{ url_for('training_day', day='day3') }}" class="btn btn-primary">Next: Day 3 →</a>
+            {% elif day == 'day3' %}
+            <a href="{{ url_for('training_day', day='day2') }}" class="btn btn-secondary">← Day 2</a>
+            <a href="{{ url_for('training_day', day='day4') }}" class="btn btn-primary">Next: Day 4 →</a>
+            {% elif day == 'day4' %}
+            <a href="{{ url_for('training_day', day='day3') }}" class="btn btn-secondary">← Day 3</a>
+            <a href="{{ url_for('training_day', day='day5') }}" class="btn btn-primary">Next: Day 5 →</a>
+            {% elif day == 'day5' %}
+            <a href="{{ url_for('training_day', day='day4') }}" class="btn btn-secondary">← Day 4</a>
+            <a href="{{ url_for('training') }}" class="btn btn-primary">Complete Training →</a>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}
